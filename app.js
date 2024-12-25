@@ -8,7 +8,7 @@ const server = http.createServer((req,res) => {
     res.end("i am home page")
   }
   if(req.url === "/about"){
-    res.end("i am about page hello world")
+    res.end("i am about page hello world hhhhhhhhhhh")
   }
 }
 )

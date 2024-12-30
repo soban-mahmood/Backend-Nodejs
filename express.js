@@ -2,17 +2,32 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
+// third party middlewares
+
+const morgan = require('morgan')
+
+app.use(morgan('dev'))
+
+// biuld in middlewere
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
+
 app.set("view engine", "ejs");
 
-app.use((req, res, next) => {
+// coustom middlewere
+
+app.use("/", (req, res, next) => {
   console.log("i am middlewere");
   return next();
 });
+
 app.get("/", function (req, res) {
-  res.send("Hello World");
-});
-app.get("/about", function (req, res) {
   res.render("index");
+});
+app.post("/get-form-data", function (req, res) {
+  console.log(req.body);
+  res.send('submit')
 });
 app.get("/contact", function (req, res) {
   res.render("index");

@@ -1,0 +1,5 @@
+// CRUD opreation in node js
+//  C === Create user
+// R === Read user
+// U === Update user
+// D === Delete user

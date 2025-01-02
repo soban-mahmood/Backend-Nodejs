@@ -25,19 +25,76 @@ app.use("/", (req, res, next) => {
   return next();
 });
 
-app.get("/", function (req, res) {
+app.get("/register", function (req, res) {
   res.render("index");
 });
-app.post("/get-form-data", function (req, res) {
+
+// create user
+app.post("/register", async function (req, res) {
   console.log(req.body);
-  res.send('submit')
+
+  const { username, email, password } = req.body
+
+  const user = await userModel.create({
+    username: username,
+    email: email,
+    password: password
+  })
+  console.log(user)
+  res.send(user)
 });
-app.get("/contact", function (req, res) {
-  res.render("index");
-});
-app.post("/post", (req, res) => {
-  res.send("POST request to the homepage");
-});
+
+// read user
+// find
+app.get('/read-user', async (req, res) => {
+  const users = await userModel.find({
+    email: "A@gmail.com",
+  })
+  res.send(users)
+})
+
+// findOne
+app.get('/read-user1', async (req, res) => {
+  const users = await userModel.findOne({
+    // email: "A@gmail.com",
+    username: "b",
+  })
+  res.send(users)
+})
+
+
+
+// update user
+app.get('/update-user',async function (req, res) {
+  const user = await userModel.findOneAndUpdate(
+ { username: "b" },{ email: "mern@gmail.com"}
+  )
+  res.send(user)
+})
+
+// delete user
+
+app.get('/delete-user',async function (req, res) {
+  const user = await userModel.findOneAndDelete(
+    { username: "b" }
+  )
+  res.send(user)
+})
+
+
+
+
+
+
+
+
+
+// app.get("/contact", function (req, res) {
+//   res.render("index");
+// });
+// app.post("/post", (req, res) => {
+//   res.send("POST request to the homepage");
+// });
 app.listen(port, () => {
   console.log(`server is runing on port ${port}`);
 });
